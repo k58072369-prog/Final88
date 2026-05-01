@@ -27,7 +27,7 @@ function App() {
         </WouterRouter>
         <Toaster />
         <footer className="fixed bottom-0 left-0 right-0 p-4 text-center text-sm text-muted-foreground/60 pointer-events-none z-50">
-          تم التطوير بواسطة المبرمج أضم أيمن
+          تم التطوير بواسطة المبرمج أدهم أيمن
         </footer>
       </TooltipProvider>
     </QueryClientProvider>
