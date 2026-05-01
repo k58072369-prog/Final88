@@ -6,4 +6,8 @@
  * OpenAPI spec version: 0.1.0
  */
 
+export * from "./examQuestion";
+export * from "./examQuestionsResponse";
+export * from "./examSection";
+export * from "./examStatus";
 export * from "./healthStatus";

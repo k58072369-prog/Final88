@@ -13,7 +13,11 @@ import type {
   UseQueryResult,
 } from "@tanstack/react-query";
 
-import type { HealthStatus } from "./api.schemas";
+import type {
+  ExamQuestionsResponse,
+  ExamStatus,
+  HealthStatus,
+} from "./api.schemas";
 
 import { customFetch } from "../custom-fetch";
 import type { ErrorType } from "../custom-fetch";
@@ -92,6 +96,158 @@ export function useHealthCheck<
   request?: SecondParameter<typeof customFetch>;
 }): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
   const queryOptions = getHealthCheckQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * Returns extracted exam questions from the PDF
+ * @summary Get all exam questions
+ */
+export const getGetExamQuestionsUrl = () => {
+  return `/api/exam/questions`;
+};
+
+export const getExamQuestions = async (
+  options?: RequestInit,
+): Promise<ExamQuestionsResponse> => {
+  return customFetch<ExamQuestionsResponse>(getGetExamQuestionsUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetExamQuestionsQueryKey = () => {
+  return [`/api/exam/questions`] as const;
+};
+
+export const getGetExamQuestionsQueryOptions = <
+  TData = Awaited<ReturnType<typeof getExamQuestions>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getExamQuestions>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetExamQuestionsQueryKey();
+
+  const queryFn: QueryFunction<
+    Awaited<ReturnType<typeof getExamQuestions>>
+  > = ({ signal }) => getExamQuestions({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getExamQuestions>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetExamQuestionsQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getExamQuestions>>
+>;
+export type GetExamQuestionsQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get all exam questions
+ */
+
+export function useGetExamQuestions<
+  TData = Awaited<ReturnType<typeof getExamQuestions>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getExamQuestions>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetExamQuestionsQueryOptions(options);
+
+  const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
+    queryKey: QueryKey;
+  };
+
+  return { ...query, queryKey: queryOptions.queryKey };
+}
+
+/**
+ * Returns the status of PDF extraction process
+ * @summary Get exam extraction status
+ */
+export const getGetExamStatusUrl = () => {
+  return `/api/exam/status`;
+};
+
+export const getExamStatus = async (
+  options?: RequestInit,
+): Promise<ExamStatus> => {
+  return customFetch<ExamStatus>(getGetExamStatusUrl(), {
+    ...options,
+    method: "GET",
+  });
+};
+
+export const getGetExamStatusQueryKey = () => {
+  return [`/api/exam/status`] as const;
+};
+
+export const getGetExamStatusQueryOptions = <
+  TData = Awaited<ReturnType<typeof getExamStatus>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getExamStatus>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}) => {
+  const { query: queryOptions, request: requestOptions } = options ?? {};
+
+  const queryKey = queryOptions?.queryKey ?? getGetExamStatusQueryKey();
+
+  const queryFn: QueryFunction<Awaited<ReturnType<typeof getExamStatus>>> = ({
+    signal,
+  }) => getExamStatus({ signal, ...requestOptions });
+
+  return { queryKey, queryFn, ...queryOptions } as UseQueryOptions<
+    Awaited<ReturnType<typeof getExamStatus>>,
+    TError,
+    TData
+  > & { queryKey: QueryKey };
+};
+
+export type GetExamStatusQueryResult = NonNullable<
+  Awaited<ReturnType<typeof getExamStatus>>
+>;
+export type GetExamStatusQueryError = ErrorType<unknown>;
+
+/**
+ * @summary Get exam extraction status
+ */
+
+export function useGetExamStatus<
+  TData = Awaited<ReturnType<typeof getExamStatus>>,
+  TError = ErrorType<unknown>,
+>(options?: {
+  query?: UseQueryOptions<
+    Awaited<ReturnType<typeof getExamStatus>>,
+    TError,
+    TData
+  >;
+  request?: SecondParameter<typeof customFetch>;
+}): UseQueryResult<TData, TError> & { queryKey: QueryKey } {
+  const queryOptions = getGetExamStatusQueryOptions(options);
 
   const query = useQuery(queryOptions) as UseQueryResult<TData, TError> & {
     queryKey: QueryKey;

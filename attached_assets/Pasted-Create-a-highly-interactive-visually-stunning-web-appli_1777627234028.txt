@@ -1,0 +1,121 @@
+Create a highly interactive, visually stunning web application from a PDF file that contains exam questions.
+
+Requirements:
+
+1. General Concept:
+
+- Transform the PDF exam content into a premium, modern, fully interactive single-page web application.
+- The website name must be: "Exam Night Review – Second Year Azhar".
+- The website interface language must be Arabic.
+- Add a professional footer that says: "Developed by Programmer Adham Ayman".
+
+2. PDF Content Extraction:
+
+- Accept a PDF file as the ONLY input source.
+- Extract all text content accurately without losing any data.
+- Detect and separate:
+  - Questions
+  - Multiple-choice answers
+- Preserve the original order exactly.
+- Automatically structure the extracted content into JSON format like:
+  [
+  {
+  "question": "question text in Arabic",
+  "options": ["A", "B", "C", "D"],
+  "correctAnswer": null
+  }
+  ]
+- Handle messy or unstructured PDFs intelligently.
+
+3. User Experience & Flow:
+
+- When the user opens the website, display a full-screen animated welcome modal.
+
+- The modal must include:
+  
+  - Friendly welcome message (in Arabic)
+  - Instruction to prepare paper and pen
+  - Motivational tone
+  - Teacher image (placeholder)
+  - Message informing the user that the app can be installed and used offline
+
+- Add smooth entrance/exit animations (fade + scale).
+
+4. Exam System:
+
+- Convert extracted questions into multiple exam sections if possible.
+
+- Display one exam at a time.
+
+- Each exam must be fully interactive:
+  
+  - Questions inside animated cards
+  - Clickable multiple-choice answers
+  - Smooth selection animations
+  - Highlight selected answer
+  - Next / Previous navigation
+  - Progress bar animation
+
+- After finishing:
+  
+  - Show animated result screen
+  - Display score with counter animation
+  - Show motivational message (in Arabic)
+  - Show teacher image in an animated card
+  - Button to go to next exam
+
+5. Design & Animations:
+
+- Use modern UI (glassmorphism or neumorphism).
+
+- Use GSAP or Framer Motion for animations.
+
+- Add:
+  
+  - Hover effects
+  - Ripple button effects
+  - Page transitions
+  - Animated gradient or particle background
+
+- Make it feel like a premium app.
+
+6. PWA (Progressive Web App):
+
+- Make the site installable via Google Chrome.
+
+- Include:
+  
+  - manifest.json
+  - service worker
+
+- Cache all assets and extracted exam data.
+
+- Ensure full offline functionality.
+
+7. Teacher Image Integration:
+
+- Use placeholder image.
+- Make it easy to replace later.
+- Add subtle animation (floating/parallax).
+- Show image in:
+  - Welcome modal
+  - Result screen
+
+8. Performance:
+
+- Optimize for mobile devices (Android focus).
+- Fast loading and smooth animations.
+
+9. Extra Creativity:
+
+- Add optional sound effects toggle.
+- Add micro-interactions.
+- Add smooth transitions between exams.
+- Create a premium, engaging user experience.
+
+Goal:
+
+- Take a PDF exam file.
+- Extract all questions and answers precisely.
+- Convert them into structured data.
+- Build a luxurious, animated, fully interactive web app that works offline and feels like a real mobile application.

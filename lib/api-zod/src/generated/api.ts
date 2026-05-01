@@ -14,3 +14,37 @@ import * as zod from "zod";
 export const HealthCheckResponse = zod.object({
   status: zod.string(),
 });
+
+/**
+ * Returns extracted exam questions from the PDF
+ * @summary Get all exam questions
+ */
+export const GetExamQuestionsResponse = zod.object({
+  exams: zod.array(
+    zod.object({
+      title: zod.string(),
+      questions: zod.array(
+        zod.object({
+          id: zod.number(),
+          question: zod.string(),
+          options: zod.array(zod.string()),
+          correctAnswer: zod.string().nullable(),
+          examIndex: zod.number(),
+        }),
+      ),
+    }),
+  ),
+  totalQuestions: zod.number(),
+});
+
+/**
+ * Returns the status of PDF extraction process
+ * @summary Get exam extraction status
+ */
+export const GetExamStatusResponse = zod.object({
+  ready: zod.boolean(),
+  processing: zod.boolean(),
+  totalPages: zod.number(),
+  processedPages: zod.number(),
+  error: zod.string().nullable(),
+});

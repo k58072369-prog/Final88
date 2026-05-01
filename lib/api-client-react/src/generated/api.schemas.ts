@@ -8,3 +8,29 @@
 export interface HealthStatus {
   status: string;
 }
+
+export interface ExamQuestion {
+  id: number;
+  question: string;
+  options: string[];
+  correctAnswer: string | null;
+  examIndex: number;
+}
+
+export interface ExamSection {
+  title: string;
+  questions: ExamQuestion[];
+}
+
+export interface ExamQuestionsResponse {
+  exams: ExamSection[];
+  totalQuestions: number;
+}
+
+export interface ExamStatus {
+  ready: boolean;
+  processing: boolean;
+  totalPages: number;
+  processedPages: number;
+  error: string | null;
+}

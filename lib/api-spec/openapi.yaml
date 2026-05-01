@@ -10,6 +10,8 @@ servers:
 tags:
   - name: health
     description: Health operations
+  - name: exam
+    description: Exam operations
 paths:
   /healthz:
     get:
@@ -24,6 +26,32 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+  /exam/questions:
+    get:
+      operationId: getExamQuestions
+      tags: [exam]
+      summary: Get all exam questions
+      description: Returns extracted exam questions from the PDF
+      responses:
+        "200":
+          description: Questions retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExamQuestionsResponse"
+  /exam/status:
+    get:
+      operationId: getExamStatus
+      tags: [exam]
+      summary: Get exam extraction status
+      description: Returns the status of PDF extraction process
+      responses:
+        "200":
+          description: Status retrieved
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ExamStatus"
 components:
   schemas:
     HealthStatus:
@@ -33,4 +61,69 @@ components:
           type: string
       required:
         - status
-
+    ExamQuestion:
+      type: object
+      properties:
+        id:
+          type: number
+        question:
+          type: string
+        options:
+          type: array
+          items:
+            type: string
+        correctAnswer:
+          type: string
+          nullable: true
+        examIndex:
+          type: number
+      required:
+        - id
+        - question
+        - options
+        - correctAnswer
+        - examIndex
+    ExamQuestionsResponse:
+      type: object
+      properties:
+        exams:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExamSection"
+        totalQuestions:
+          type: number
+      required:
+        - exams
+        - totalQuestions
+    ExamSection:
+      type: object
+      properties:
+        title:
+          type: string
+        questions:
+          type: array
+          items:
+            $ref: "#/components/schemas/ExamQuestion"
+      required:
+        - title
+        - questions
+    ExamStatus:
+      type: object
+      properties:
+        ready:
+          type: boolean
+        processing:
+          type: boolean
+        totalPages:
+          type: number
+        processedPages:
+          type: number
+        error:
+          type: string
+          nullable: true
+      required:
+        - ready
+        - processing
+        - totalPages
+        - processedPages
+        - error

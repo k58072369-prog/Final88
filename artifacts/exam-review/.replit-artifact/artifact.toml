@@ -1,0 +1,31 @@
+kind = "web"
+previewPath = "/"
+title = "Exam Night Review"
+version = "1.0.0"
+id = "artifacts/exam-review"
+router = "path"
+
+[[integratedSkills]]
+name = "react-vite"
+version = "1.0.0"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 18513
+
+[services.development]
+run = "pnpm --filter @workspace/exam-review run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/exam-review", "run", "build" ]
+publicDir = "artifacts/exam-review/dist/public"
+serve = "static"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "18513"
+BASE_PATH = "/"
